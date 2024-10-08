@@ -127,6 +127,16 @@ it('works', async () => {
       errors: 1,
     },
     {
+      name: 'not passes when more than one statement and no line breaks and comments and using function',
+      code: `
+    it('works', async function() {
+        const result = await client.invalidate({ userId: Random.int(1000000) });
+        assert.strictEqual(result.isSuccess, true);
+    });
+    `,
+      errors: 1,
+    },
+    {
       code: `
     it('works', async () => {
         const foo = 'bar';

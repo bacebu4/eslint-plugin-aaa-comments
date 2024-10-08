@@ -41,23 +41,20 @@ const rule = {
 
     return {
       CallExpression(node) {
-        if (node.callee.name !== 'it') {
+        if (node.callee.type !== 'Identifier' || node.callee.name !== 'it') {
           return;
         }
 
         const secondArgument = node.arguments.at(1);
-        if (secondArgument.type !== 'ArrowFunctionExpression') {
+        if (!secondArgument) {
           return;
         }
 
-        /** @type TSESTree.ArrowFunctionExpression */
-        const arrowFunctionExpression = secondArgument;
-        if (arrowFunctionExpression.body.type !== 'BlockStatement') {
+        const blockStatement = getBlockStatementBody(secondArgument);
+
+        if (!blockStatement) {
           return;
         }
-
-        /** @type TSESTree.BlockStatement */
-        const blockStatement = arrowFunctionExpression.body;
 
         const body = blockStatement.body;
         const comments = context.sourceCode.getCommentsInside(blockStatement);
@@ -103,6 +100,19 @@ function getAllLinesFromLocation(loc) {
     lines.push(i);
   }
   return lines;
+}
+
+/**
+ * @param {TSESTree.CallExpressionArgument} node
+ */
+function getBlockStatementBody(node) {
+  if (node.type === 'ArrowFunctionExpression' && node.body.type === 'BlockStatement') {
+    return node.body;
+  }
+
+  if (node.type === 'FunctionExpression') {
+    return node.body;
+  }
 }
 
 module.exports = rule;
