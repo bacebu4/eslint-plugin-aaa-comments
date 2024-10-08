@@ -27,12 +27,10 @@ All rules are off by default. Configuring manually:
 All rules are off by default. However, you may configure them manually in your `eslint.config.(js|cjs|mjs)`.
 
 ```js
-import aaaCommentsPlugin from 'eslint-plugin-aaa-comments';
 import js from '@eslint/js';
 
 export default [
   js.configs.recommended,
-  importPlugin.flatConfigs.recommended,
   {
     files: ['**/*.{js,mjs,cjs}'],
     languageOptions: {
