@@ -32,7 +32,11 @@ const rule = {
           message:
             'More than 2 line breaks were found. Provide all AAA comments for better readability or delete redundant line breaks.',
         });
+
+        return { isSuccess: false };
       }
+
+      return { isSuccess: true };
     }
 
     return {
@@ -79,17 +83,8 @@ const rule = {
           return;
         }
 
-        if (lineBreaksCount === 0) {
-          const haveOnlyOneStatement = body.length === 1;
-
-          if (haveOnlyOneStatement) {
-            return;
-          }
-
-          context.report({
-            node,
-            message: 'No line breaks were found. Provide line breaks for better readability.',
-          });
+        const haveOnlyOneStatement = body.length === 1;
+        if (haveOnlyOneStatement && lineBreaksCount === 0) {
           return;
         }
 

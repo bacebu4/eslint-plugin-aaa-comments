@@ -101,9 +101,23 @@ it('works', async () => {
     });
     `,
     },
+    {
+      name: 'passes when no line breaks and have comments',
+      code: `
+    it('works', async () => {
+        // arrange
+        const foo = 'bar';
+        // act
+        const result = await client.invalidate({ userId: Random.int(1000000) });
+        // assert
+        assert.strictEqual(result.isSuccess, true);
+    });
+    `,
+    },
   ],
   invalid: [
     {
+      name: 'not passes when more than one statement and no line breaks and comments',
       code: `
     it('works', async () => {
         const result = await client.invalidate({ userId: Random.int(1000000) });
