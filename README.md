@@ -1,6 +1,6 @@
 # eslint-plugin-aaa-comments
 
-This plugin provide rule for enforcing AAA (Arrange Act Assert) comments in unit tests.
+This plugin provide rule for enforcing AAA (Arrange Act Assert) comments in unit tests. For the motivation refer to [Making Better Unit Tests: part 1, the AAA pattern](https://freecontent.manning.com/making-better-unit-tests-part-1-the-aaa-pattern/).
 
 ## Installation
 
