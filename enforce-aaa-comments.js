@@ -11,6 +11,30 @@ const rule = {
     schema: [],
   },
   create(context) {
+    /**
+     * @param {TSESTree.Comment[]} comments
+     * @param {TSESTree.CallExpression} node
+     */
+    function checkAaaComments(comments, node) {
+      const aaaComments = new Set(['arrange', 'act', 'assert']);
+      const allAaaComments = comments
+        .map(c => c.value.trim().toLowerCase())
+        .filter(c => aaaComments.has(c));
+
+      const allUniqueAaaComments = new Set(allAaaComments);
+
+      const allAaaCommentsArePresentExactlyOnce =
+        allAaaComments.length === allUniqueAaaComments.size && allUniqueAaaComments.size === 3;
+
+      if (!allAaaCommentsArePresentExactlyOnce) {
+        context.report({
+          node,
+          message:
+            'More than 2 line breaks were found. Provide all AAA comments for better readability or delete redundant line breaks.',
+        });
+      }
+    }
+
     return {
       CallExpression(node) {
         if (node.callee.name !== 'it') {
@@ -69,23 +93,7 @@ const rule = {
           return;
         }
 
-        const aaaComments = new Set(['arrange', 'act', 'assert']);
-        const allAaaComments = comments
-          .map(c => c.value.trim().toLowerCase())
-          .filter(c => aaaComments.has(c));
-
-        const allUniqueAaaComments = new Set(allAaaComments);
-
-        const allAaaCommentsArePresentExactlyOnce =
-          allAaaComments.length === allUniqueAaaComments.size && allUniqueAaaComments.size === 3;
-
-        if (!allAaaCommentsArePresentExactlyOnce) {
-          context.report({
-            node,
-            message:
-              'More than 2 line breaks were found. Provide all AAA comments for better readability or delete redundant line breaks.',
-          });
-        }
+        checkAaaComments(comments, node);
       },
     };
   },
