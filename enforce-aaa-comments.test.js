@@ -93,6 +93,14 @@ it('works', async () => {
     });
     `,
     },
+    {
+      name: 'passes when single statement',
+      code: `
+    it('works', async () => {
+        assert.strictEqual(true, true);
+    });
+    `,
+    },
   ],
   invalid: [
     {

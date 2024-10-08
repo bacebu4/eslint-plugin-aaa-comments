@@ -56,6 +56,12 @@ const rule = {
         }
 
         if (lineBreaksCount === 0) {
+          const haveOnlyOneStatement = body.length === 1;
+
+          if (haveOnlyOneStatement) {
+            return;
+          }
+
           context.report({
             node,
             message: 'No line breaks were found. Provide line breaks for better readability.',
