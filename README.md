@@ -77,6 +77,14 @@ it('works', async () => {
 });
 
 it('works', async () => {
+  const foo = 'bar';
+
+  const result = await client.invalidate({ userId: Random.int(1000000) });
+
+  assert.strictEqual(result.isSuccess, true);
+});
+
+it('works', async () => {
   // Arrange
   const foo = 'bar';
 
