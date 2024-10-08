@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-aaa-comments",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "eslint-plugin-aaa-comments.js",
   "scripts": {
     "test": "node enforce-aaa-comments.test.js"
