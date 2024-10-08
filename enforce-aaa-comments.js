@@ -7,6 +7,7 @@ const rule = {
     docs: {
       description:
         'Enforce that an `it` section provides AAA comments or correct number of line breaks.',
+      url: 'https://github.com/bacebu4/eslint-plugin-aaa-comments',
     },
     schema: [],
   },
@@ -51,7 +52,6 @@ const rule = {
         }
 
         const blockStatement = getBlockStatementBody(secondArgument);
-
         if (!blockStatement) {
           return;
         }
