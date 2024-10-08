@@ -1,0 +1,24 @@
+{
+  "name": "eslint-plugin-aaa-comments",
+  "version": "1.0.1",
+  "main": "eslint-plugin-aaa-comments.js",
+  "scripts": {
+    "test": "node enforce-aaa-comments.test.js"
+  },
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "eslint-plugin"
+  ],
+  "author": "",
+  "license": "ISC",
+  "description": "ESLint plugin for enforcing AAA comments.",
+  "devDependencies": {
+    "@typescript-eslint/utils": "^8.8.1",
+    "eslint": "^9.12.0",
+    "@types/node": "^22.7.5"
+  },
+  "peerDependencies": {
+    "eslint": ">=8.0.0"
+  }
+}
