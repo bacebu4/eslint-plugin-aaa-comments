@@ -10,8 +10,12 @@
     "eslintplugin",
     "eslint-plugin"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "Vasilii Krasikov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bacebu4/eslint-plugin-aaa-comments/issues"
+  },
+  "homepage": "https://github.com/bacebu4/eslint-plugin-aaa-comments#readme",
   "description": "ESLint plugin for enforcing AAA comments.",
   "devDependencies": {
     "@types/node": "^22.7.5",
