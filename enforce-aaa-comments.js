@@ -18,26 +18,23 @@ const rule = {
      */
     function checkAaaComments(comments, node) {
       const aaaComments = new Set(['arrange', 'act', 'assert']);
-      const allAaaComments = comments
+      const collectedAaaComments = comments
         .map(c => c.value.trim().toLowerCase())
         .filter(c => aaaComments.has(c));
 
-      const allUniqueAaaComments = new Set(allAaaComments);
+      const uniqueCollectedAaaComments = new Set(collectedAaaComments);
 
-      const allAaaCommentsArePresentExactlyOnce =
-        allAaaComments.length === allUniqueAaaComments.size && allUniqueAaaComments.size === 3;
+      const collectedAaaCommentsArePresentExactlyOnce =
+        collectedAaaComments.length === uniqueCollectedAaaComments.size &&
+        uniqueCollectedAaaComments.size === 3;
 
-      if (!allAaaCommentsArePresentExactlyOnce) {
+      if (!collectedAaaCommentsArePresentExactlyOnce) {
         context.report({
           node,
           message:
             'More than 2 line breaks were found. Provide all AAA comments for better readability or delete redundant line breaks.',
         });
-
-        return { isSuccess: false };
       }
-
-      return { isSuccess: true };
     }
 
     return {
@@ -51,13 +48,13 @@ const rule = {
           return;
         }
 
-        const blockStatement = getBlockStatementBody(secondArgument);
-        if (!blockStatement) {
+        const topLevelBlockStatement = getBlockStatement(secondArgument);
+        if (!topLevelBlockStatement) {
           return;
         }
 
-        const body = blockStatement.body;
-        const comments = context.sourceCode.getCommentsInside(blockStatement);
+        const body = topLevelBlockStatement.body;
+        const comments = context.sourceCode.getCommentsInside(topLevelBlockStatement);
 
         const allOccupiedLines = body.flatMap(bs => getAllLinesFromLocation(bs.loc));
         comments.forEach(c => allOccupiedLines.push(...getAllLinesFromLocation(c.loc)));
@@ -105,7 +102,7 @@ function getAllLinesFromLocation(loc) {
 /**
  * @param {TSESTree.CallExpressionArgument} node
  */
-function getBlockStatementBody(node) {
+function getBlockStatement(node) {
   if (node.type === 'ArrowFunctionExpression' && node.body.type === 'BlockStatement') {
     return node.body;
   }
