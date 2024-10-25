@@ -1,3 +1,5 @@
+[![npm version](https://img.shields.io/npm/v/cobertura)](https://www.npmjs.com/package/eslint-plugin-aaa-comments)
+
 # eslint-plugin-aaa-comments
 
 This plugin provide rule for enforcing AAA (Arrange Act Assert) comments **or** enforces you to organize your `it` cases into 3 sections without enforcing comments in unit tests.
