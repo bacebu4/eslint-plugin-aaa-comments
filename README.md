@@ -15,10 +15,10 @@ npm install eslint-plugin-aaa-comments --save-dev
 
 ### Config - Legacy (`.eslintrc`)
 
-All rules are off by default. Configuring manually:
-
 ```jsonc
 {
+  // add "aaa-comments" to plugins array
+  "plugins": ["aaa-comments"],
   "rules": {
     "aaa-comments/enforce-aaa-comments": "error"
     // etc...
@@ -31,21 +31,13 @@ All rules are off by default. Configuring manually:
 All rules are off by default. However, you may configure them manually in your `eslint.config.(js|cjs|mjs)`.
 
 ```js
-import js from '@eslint/js';
+import aaaCommentsPlugin from 'eslint-plugin-aaa-comments';
+import { defineConfig } from 'eslint/config';
 
-export default [
-  js.configs.recommended,
-  {
-    files: ['**/*.{js,mjs,cjs}'],
-    languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-    },
-    rules: {
-      'aaa-comments/enforce-aaa-comments': 'error',
-    },
-  },
-];
+export default defineConfig([
+  aaaCommentsPlugin.configs.recommended,
+  // etc...
+]);
 ```
 
 ## Rules
