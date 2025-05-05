@@ -1,9 +1,9 @@
 {
   "name": "eslint-plugin-aaa-comments",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "main": "eslint-plugin-aaa-comments.js",
   "scripts": {
-    "test": "node enforce-aaa-comments.test.js"
+    "test": "node enforce-aaa-comments.test.js && node enforce-sut-interaction.test.js"
   },
   "keywords": [
     "eslint",

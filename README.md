@@ -1,4 +1,4 @@
-[![npm version](https://img.shields.io/npm/v/cobertura)](https://www.npmjs.com/package/eslint-plugin-aaa-comments)
+[![npm version](https://img.shields.io/npm/v/eslint-plugin-aaa-comments)](https://www.npmjs.com/package/eslint-plugin-aaa-comments)
 
 # eslint-plugin-aaa-comments
 
@@ -20,7 +20,8 @@ npm install eslint-plugin-aaa-comments --save-dev
   // add "aaa-comments" to plugins array
   "plugins": ["aaa-comments"],
   "rules": {
-    "aaa-comments/enforce-aaa-comments": "error"
+    "aaa-comments/enforce-aaa-comments": "error",
+    "aaa-comments/enforce-sut-interaction": "warn",
     // etc...
   },
 },
@@ -40,9 +41,14 @@ export default defineConfig([
 ]);
 ```
 
+There are two configs:
+
+- `aaaCommentsPlugin.configs.recommended`. It only has `enforce-aaa-comments` with error level
+- `aaaCommentsPlugin.configs.strict`. It has `enforce-aaa-comments` and `enforce-sut-interaction` with error level
+
 ## Rules
 
-The package consists of only one single rule
+The package consists of two rules: `enforce-aaa-comments` and `enforce-sut-interaction`
 
 ### aaa-comments/enforce-aaa-comments
 
@@ -59,7 +65,7 @@ Based on the number of line breaks `it` callback have:
 - If 1 or 2 line breaks – passes
 - If 3 line breaks – requires you to have AAA comments
 
-### Examples
+#### Examples
 
 Here's passing examples:
 
@@ -107,6 +113,44 @@ it('works', async () => {
 
   const result2 = await client.invalidate({ userId: Random.int(1000001) });
 
+  assert.strictEqual(result.isSuccess, true);
+});
+```
+
+### aaa-comments/enforce-sut-interaction
+
+Enforces you to interact with `sut` (System Under Test) object. How the rule works:
+
+1. Find every `it` function
+2. Find the second argument of the function which is usually a function
+3. Within that function determines whether we interact with any objects, excluding assertion libraries and static method calls. If we do then it checks whether we have interacted with `sut` object
+
+#### Examples
+
+Here's passing examples:
+
+```js
+it('works', async () => {
+  const result = await sut.invalidate({ userId: Random.int(1000000) });
+  assert.strictEqual(result.isSuccess, true);
+});
+
+it('works', async () => {
+  const result = sum(1, 2);
+  assert.strictEqual(result, 3);
+});
+
+it('works', async () => {
+  const result = Random.int(1, 2);
+  assert.strictEqual(result, 3);
+});
+```
+
+Here's examples which are not passing:
+
+```js
+it('works', async () => {
+  const result = await client.invalidate({ userId: Random.int(1000000) });
   assert.strictEqual(result.isSuccess, true);
 });
 ```

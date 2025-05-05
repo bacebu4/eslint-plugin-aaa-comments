@@ -3,7 +3,7 @@
 /** @type TSESLint.RuleModule<any> */
 const rule = {
   meta: {
-    type: 'problem',
+    type: 'layout',
     docs: {
       description:
         'Enforce that an `it` section provides AAA comments or correct number of line breaks.',
@@ -43,12 +43,12 @@ const rule = {
           return;
         }
 
-        const secondArgument = node.arguments.at(1);
-        if (!secondArgument) {
+        const possibleTestCallback = node.arguments.at(1);
+        if (!possibleTestCallback) {
           return;
         }
 
-        const topLevelBlockStatement = getBlockStatement(secondArgument);
+        const topLevelBlockStatement = getBlockStatement(possibleTestCallback);
         if (!topLevelBlockStatement) {
           return;
         }
